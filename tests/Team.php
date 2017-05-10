@@ -2,6 +2,8 @@
 
 namespace Lindelius\FIDE\Tests;
 
+use Lindelius\FIDE\Contestant;
+
 /**
  * Class Team
  *
@@ -39,16 +41,31 @@ class Team implements Contestant
         $this->matches       = $matches;
     }
 
+    /**
+     * Gets the contestants current rating.
+     *
+     * @return int
+     */
     public function currentRating()
     {
         return $this->rating;
     }
 
+    /**
+     * Gets the contestants highest rating.
+     *
+     * @return int
+     */
     public function highestRating()
     {
         return $this->highestRating;
     }
 
+    /**
+     * Gets the total number of matches the contestant has played.
+     *
+     * @return int
+     */
     public function totalMatchesPlayed()
     {
         return $this->matches;

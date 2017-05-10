@@ -5,7 +5,8 @@ namespace Lindelius\FIDE;
 /**
  * Class RatingSystem
  *
- * An implementation of the FIDE Rating System ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
+ * An implementation of the FIDE Rating System
+ * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
  *
  * @author  Tom Lindelius <tom.lindelius@gmail.com>
  * @version 2017-05-10
@@ -31,8 +32,8 @@ class RatingSystem
      * Calculates the rating change for a given contestant versus a given
      * opponent with a given outcome.
      *
-     * @param Contestant $contestantA
-     * @param Contestant $contestantB
+     * @param Contestant $contestant
+     * @param Contestant $opponent
      * @param int        $outcome
      * @return int
      */
@@ -41,7 +42,7 @@ class RatingSystem
         $higherRated      = $contestant->currentRating() >= $opponent->currentRating();
         $ratingDifference = static::getRatingDifference($contestant, $opponent);
         $scoreProbability = static::getScoreProbability($ratingDifference, $higherRated);
-        
+
         $k = 20;
 
         if ($contestant->totalMatchesPlayed() < 30) {
@@ -85,21 +86,21 @@ class RatingSystem
     protected static function getScoreProbability($ratingDifference, $higherRated = true)
     {
         $ratingDifferences = [
-            0 => 50,
-            4 => 51,
-            11 => 52,
-            18 => 53,
-            26 => 54,
-            33 => 55,
-            40 => 56,
-            47 => 57,
-            54 => 58,
-            62 => 59,
-            69 => 60,
-            77 => 61,
-            84 => 62,
-            92 => 63,
-            99 => 64,
+            0   => 50,
+            4   => 51,
+            11  => 52,
+            18  => 53,
+            26  => 54,
+            33  => 55,
+            40  => 56,
+            47  => 57,
+            54  => 58,
+            62  => 59,
+            69  => 60,
+            77  => 61,
+            84  => 62,
+            92  => 63,
+            99  => 64,
             107 => 65,
             114 => 66,
             122 => 67,
