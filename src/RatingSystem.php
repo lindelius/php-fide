@@ -35,20 +35,23 @@ class RatingSystem
      * @param Contestant $contestant
      * @param Contestant $opponent
      * @param int        $outcome
+     * @param null|int   $k
      * @return int
      */
-    public static function calculateRatingChange(Contestant $contestant, Contestant $opponent, $outcome)
+    public static function calculateRatingChange(Contestant $contestant, Contestant $opponent, $outcome, $k = null)
     {
         $higherRated      = $contestant->currentRating() >= $opponent->currentRating();
         $ratingDifference = static::getRatingDifference($contestant, $opponent);
         $scoreProbability = static::getScoreProbability($ratingDifference, $higherRated);
 
-        $k = 20;
-
-        if ($contestant->totalMatchesPlayed() < 30) {
-            $k = 40;
-        } elseif ($contestant->highestRating() >= 2400) {
-            $k = 10;
+        if (!is_int($k)) {
+            if ($contestant->totalMatchesPlayed() < 30) {
+                $k = 40;
+            } elseif ($contestant->highestRating() >= 2400) {
+                $k = 10;
+            } else {
+                $k = 20;
+            }
         }
 
         $score = 0.5;
