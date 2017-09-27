@@ -32,17 +32,17 @@ class RatingSystem
      * Calculates the rating change for a given contestant versus a given
      * opponent with a given outcome.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
-     * @param int        $outcome
-     * @param null|int   $k
+     * @param  Contestant $contestant
+     * @param  Contestant $opponent
+     * @param  int        $outcome
+     * @param  int|null   $k
      * @return int
      */
     public static function calculateRatingChange(Contestant $contestant, Contestant $opponent, $outcome, $k = null)
     {
-        $higherRated      = $contestant->currentRating() >= $opponent->currentRating();
+        $isHigherRated    = $contestant->currentRating() >= $opponent->currentRating();
         $ratingDifference = static::getRatingDifference($contestant, $opponent);
-        $scoreProbability = static::getScoreProbability($ratingDifference, $higherRated);
+        $scoreProbability = static::getScoreProbability($ratingDifference, $isHigherRated);
 
         if (!is_int($k)) {
             if ($contestant->totalMatchesPlayed() < 30) {
@@ -68,25 +68,26 @@ class RatingSystem
     /**
      * Gets the absolute rating difference between two contestants.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
+     * @param  Contestant $contestant
+     * @param  Contestant $opponent
      * @return int
      */
     protected static function getRatingDifference(Contestant $contestant, Contestant $opponent)
     {
-        $absoluteDifference = abs($contestant->currentRating() - $opponent->currentRating());
-
-        return min($absoluteDifference, 400);
+        return min(
+            abs($contestant->currentRating() - $opponent->currentRating()),
+            400
+        );
     }
 
     /**
      * Gets the score probability for a given rating difference.
      *
-     * @param int  $ratingDifference
-     * @param bool $higherRated
+     * @param  int  $ratingDifference
+     * @param  bool $isHigherRated
      * @return float
      */
-    protected static function getScoreProbability($ratingDifference, $higherRated = true)
+    protected static function getScoreProbability($ratingDifference, $isHigherRated = true)
     {
         $ratingDifferences = [
             0   => 50,
@@ -152,6 +153,6 @@ class RatingSystem
             }
         }
 
-        return (float) ($higherRated ? $finalScoreProbability : 1 - $finalScoreProbability);
+        return (float) ($isHigherRated ? $finalScoreProbability : 1 - $finalScoreProbability);
     }
 }
