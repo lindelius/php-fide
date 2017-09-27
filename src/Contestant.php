@@ -6,7 +6,7 @@ namespace Lindelius\FIDE;
  * Interface Contestant
  *
  * @author  Tom Lindelius <tom.lindelius@gmail.com>
- * @version 2017-05-10
+ * @version 2017-09-27
  */
 interface Contestant
 {
@@ -15,19 +15,19 @@ interface Contestant
      *
      * @return int
      */
-    public function currentRating();
+    public function getCurrentRating();
 
     /**
      * Gets the contestants highest rating.
      *
      * @return int
      */
-    public function highestRating();
+    public function getHighestRating();
 
     /**
      * Gets the total number of matches the contestant has played.
      *
      * @return int
      */
-    public function totalMatchesPlayed();
+    public function getTotalMatchesPlayed();
 }

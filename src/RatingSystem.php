@@ -9,7 +9,7 @@ namespace Lindelius\FIDE;
  * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
  *
  * @author  Tom Lindelius <tom.lindelius@gmail.com>
- * @version 2017-05-10
+ * @version 2017-09-27
  */
 class RatingSystem
 {
@@ -40,14 +40,14 @@ class RatingSystem
      */
     public static function calculateRatingChange(Contestant $contestant, Contestant $opponent, $outcome, $k = null)
     {
-        $isHigherRated    = $contestant->currentRating() >= $opponent->currentRating();
+        $isHigherRated    = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
         $ratingDifference = static::getRatingDifference($contestant, $opponent);
         $scoreProbability = static::getScoreProbability($ratingDifference, $isHigherRated);
 
         if (!is_int($k)) {
-            if ($contestant->totalMatchesPlayed() < 30) {
+            if ($contestant->getTotalMatchesPlayed() < 30) {
                 $k = 40;
-            } elseif ($contestant->highestRating() >= 2400) {
+            } elseif ($contestant->getHighestRating() >= 2400) {
                 $k = 10;
             } else {
                 $k = 20;
@@ -75,7 +75,7 @@ class RatingSystem
     protected static function getRatingDifference(Contestant $contestant, Contestant $opponent)
     {
         return min(
-            abs($contestant->currentRating() - $opponent->currentRating()),
+            abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),
             400
         );
     }
