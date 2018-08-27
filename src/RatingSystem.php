@@ -7,9 +7,6 @@ namespace Lindelius\FIDE;
  *
  * An implementation of the FIDE Rating System
  * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
- *
- * @author  Tom Lindelius <tom.lindelius@gmail.com>
- * @version 2017-09-27
  */
 class RatingSystem
 {
@@ -66,7 +63,7 @@ class RatingSystem
     }
 
     /**
-     * Gets the absolute rating difference between two contestants.
+     * Gets the absolute rating difference between given contestants.
      *
      * @param  Contestant $contestant
      * @param  Contestant $opponent
