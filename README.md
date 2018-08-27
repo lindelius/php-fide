@@ -1,14 +1,17 @@
 # php-fide
+
 PHP implementation of the [FIDE Rating System](https://www.fide.com/fide/handbook.html?id=172&view=article).
 
 ## Requirements
+
 * PHP 5.6, or higher
 
 ## Installation
+
 In order to install this library, issue the following command from your project's root folder:
 
 ```
-composer require "lindelius/php-fide=^0.1"
+composer require "lindelius/php-fide=^0.2"
 ```
 
 ## Usage
@@ -16,26 +19,33 @@ composer require "lindelius/php-fide=^0.1"
 First of all, implement the `Lindelius\FIDE\Contestant` interface in your ladder participant model (the object holding rating information about a given contestant in a given ladder or tournament)
 
 ```php
-use Lindelius\FIDE\Contestant;
-
 /**
- * Class LadderParticipant
+ * Class Team
  */
-class LadderParticipant implements Contestant
+class Team implements \Lindelius\FIDE\Contestant
 {
-    public function currentRating()
+    /**
+     * @return int
+     */
+    public function getCurrentRating()
     {
-        // TODO: Return the contestants current rating
+        // TODO: Return the team's current rating
     }
     
-    public function highestRating()
+    /**
+     * @return int
+     */
+    public function getHighestRating()
     {
-        // TODO: Return the contestants highest rating
+        // TODO: Return the team's highest rating
     }
     
-    public function totalMatchesPlayed()
+    /**
+     * @return int
+     */
+    public function getTotalMatchesPlayed()
     {
-        // TODO: Return the total number of matches played by the contestant
+        // TODO: Return the total number of matches played by the team
     }
 }
 ```
