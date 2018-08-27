@@ -6,9 +6,6 @@ use Lindelius\FIDE\Contestant;
 
 /**
  * Class Team
- *
- * @author  Tom Lindelius <tom.lindelius@gmail.com>
- * @version 2017-05-10
  */
 class Team implements Contestant
 {
@@ -25,49 +22,43 @@ class Team implements Contestant
     /**
      * @var int
      */
-    private $matches;
+    private $matchesPlayed;
 
     /**
-     * Constructor for Team objects.
+     * Team constructor.
      *
      * @param int $rating
      * @param int $highestRating
-     * @param int $matches
+     * @param int $matchesPlayed
      */
-    public function __construct($rating, $highestRating, $matches)
+    public function __construct($rating, $highestRating, $matchesPlayed)
     {
         $this->rating        = $rating;
         $this->highestRating = $highestRating;
-        $this->matches       = $matches;
+        $this->matchesPlayed = $matchesPlayed;
     }
 
     /**
-     * Gets the contestants current rating.
-     *
      * @return int
      */
-    public function currentRating()
+    public function getCurrentRating()
     {
         return $this->rating;
     }
 
     /**
-     * Gets the contestants highest rating.
-     *
      * @return int
      */
-    public function highestRating()
+    public function getHighestRating()
     {
         return $this->highestRating;
     }
 
     /**
-     * Gets the total number of matches the contestant has played.
-     *
      * @return int
      */
-    public function totalMatchesPlayed()
+    public function getTotalMatchesPlayed()
     {
-        return $this->matches;
+        return $this->matchesPlayed;
     }
 }

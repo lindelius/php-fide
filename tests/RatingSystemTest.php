@@ -8,9 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class RatingSystemTest
- *
- * @author  Tom Lindelius <tom.lindelius@gmail.com>
- * @version 2017-05-12
  */
 class RatingSystemTest extends TestCase
 {
@@ -36,6 +33,7 @@ class RatingSystemTest extends TestCase
     public function equallySkilledContestantProvider()
     {
         return [
+
             'equally skilled draw'        => [
                 new Team(1000, 1000, 35),
                 new Team(1000, 1000, 35),
@@ -54,6 +52,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 10,
             ],
+
             /**
              * Rookie contestants (less than 30 matches played).
              */
@@ -75,6 +74,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 20,
             ],
+
             /**
              * Highly skilled contestants (have, or have previously had, a
              * rating of 2400 or more).
@@ -97,6 +97,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 5,
             ],
+
         ];
     }
 
@@ -108,6 +109,7 @@ class RatingSystemTest extends TestCase
     public function higherSkilledContestantProvider()
     {
         return [
+
             'higher skilled draw'        => [
                 new Team(2000, 2000, 75),
                 new Team(1000, 1000, 35),
@@ -126,6 +128,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 2,
             ],
+
             /**
              * Rookie contestants (less than 30 matches played).
              */
@@ -147,6 +150,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 14,
             ],
+
             /**
              * Highly skilled contestants (have, or previously had, a rating of
              * 2400 or more).
@@ -169,6 +173,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 2,
             ],
+
         ];
     }
 
@@ -180,6 +185,7 @@ class RatingSystemTest extends TestCase
     public function lowerSkilledContestantProvider()
     {
         return [
+
             'lower skilled draw'        => [
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
@@ -198,6 +204,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 18,
             ],
+
             /**
              * Rookie contestants (less than 30 matches played).
              */
@@ -219,6 +226,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 37,
             ],
+
             /**
              * Highly skilled contestants (have, or previously had, a rating of
              * 2400 or more).
@@ -241,6 +249,7 @@ class RatingSystemTest extends TestCase
                 RatingSystem::WON,
                 8,
             ],
+
         ];
     }
 
