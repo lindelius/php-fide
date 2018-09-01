@@ -27,27 +27,42 @@ use Lindelius\FIDE\Contestant;
 class Team implements Contestant
 {
     /**
-     * @return int
+     * @var int
+     */
+    public $highestRating;
+
+    /**
+     * @var int
+     */
+    public $matchesPlayed;
+
+    /**
+     * @var int
+     */
+    public $rating;
+    
+    /**
+     * @inheritdoc
      */
     public function getCurrentRating()
     {
-        // TODO: Return the team's current rating
+        return $this->rating;
     }
     
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getHighestRating()
     {
-        // TODO: Return the team's highest rating
+        return $this->highestRating;
     }
     
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getTotalMatchesPlayed()
     {
-        // TODO: Return the total number of matches played by the team
+        return $this->matchesPlayed;
     }
 }
 ```

@@ -39,7 +39,7 @@ class Team implements Contestant
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getCurrentRating()
     {
@@ -47,7 +47,7 @@ class Team implements Contestant
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getHighestRating()
     {
@@ -55,7 +55,7 @@ class Team implements Contestant
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getTotalMatchesPlayed()
     {
