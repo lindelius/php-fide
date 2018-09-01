@@ -38,19 +38,19 @@ class RatingSystemTest extends TestCase
                 new Team(1000, 1000, 35),
                 new Team(1000, 1000, 35),
                 RatingSystem::DRAW,
-                0,
+                1000,
             ],
             'equally skilled lost'        => [
                 new Team(1000, 1000, 35),
                 new Team(1000, 1000, 35),
                 RatingSystem::LOST,
-                -10,
+                990,
             ],
             'equally skilled won'         => [
                 new Team(1000, 1000, 35),
                 new Team(1000, 1000, 35),
                 RatingSystem::WON,
-                10,
+                1010,
             ],
 
             /**
@@ -60,19 +60,19 @@ class RatingSystemTest extends TestCase
                 new Team(1000, 1000, 10),
                 new Team(1000, 1000, 10),
                 RatingSystem::DRAW,
-                0,
+                1000,
             ],
             'equally skilled rookie lost' => [
                 new Team(1000, 1000, 10),
                 new Team(1000, 1000, 10),
                 RatingSystem::LOST,
-                -20,
+                980,
             ],
             'equally skilled rookie won'  => [
                 new Team(1000, 1000, 10),
                 new Team(1000, 1000, 10),
                 RatingSystem::WON,
-                20,
+                1020,
             ],
 
             /**
@@ -83,19 +83,19 @@ class RatingSystemTest extends TestCase
                 new Team(2200, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::DRAW,
-                0,
+                2200,
             ],
             'equally skilled elite lost'  => [
                 new Team(2200, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::LOST,
-                -5,
+                2195,
             ],
             'equally skilled elite won'   => [
                 new Team(2200, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::WON,
-                5,
+                2205,
             ],
 
         ];
@@ -114,19 +114,19 @@ class RatingSystemTest extends TestCase
                 new Team(2000, 2000, 75),
                 new Team(1000, 1000, 35),
                 RatingSystem::DRAW,
-                -8,
+                1992,
             ],
             'higher skilled lost'        => [
                 new Team(2000, 2000, 75),
                 new Team(1000, 1000, 35),
                 RatingSystem::LOST,
-                -18,
+                1982,
             ],
             'higher skilled won'         => [
                 new Team(2000, 2000, 75),
                 new Team(1000, 1000, 35),
                 RatingSystem::WON,
-                2,
+                2002,
             ],
 
             /**
@@ -136,19 +136,19 @@ class RatingSystemTest extends TestCase
                 new Team(1100, 1100, 20),
                 new Team(1000, 1000, 10),
                 RatingSystem::DRAW,
-                -6,
+                1094,
             ],
             'higher skilled rookie lost' => [
                 new Team(1100, 1100, 20),
                 new Team(1000, 1000, 10),
                 RatingSystem::LOST,
-                -26,
+                1074,
             ],
             'higher skilled rookie won'  => [
                 new Team(1100, 1100, 20),
                 new Team(1000, 1000, 10),
                 RatingSystem::WON,
-                14,
+                1114,
             ],
 
             /**
@@ -159,19 +159,19 @@ class RatingSystemTest extends TestCase
                 new Team(2400, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::DRAW,
-                -3,
+                2397,
             ],
             'higher skilled elite lost'  => [
                 new Team(2400, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::LOST,
-                -8,
+                2392,
             ],
             'higher skilled elite won'   => [
                 new Team(2400, 2400, 100),
                 new Team(2200, 2200, 75),
                 RatingSystem::WON,
-                2,
+                2402,
             ],
 
         ];
@@ -190,19 +190,19 @@ class RatingSystemTest extends TestCase
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
                 RatingSystem::DRAW,
-                8,
+                1008,
             ],
             'lower skilled lost'        => [
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
                 RatingSystem::LOST,
-                -2,
+                998,
             ],
             'lower skilled won'         => [
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
                 RatingSystem::WON,
-                18,
+                1018,
             ],
 
             /**
@@ -212,19 +212,19 @@ class RatingSystemTest extends TestCase
                 new Team(1000, 1000, 10),
                 new Team(2000, 2000, 75),
                 RatingSystem::DRAW,
-                17,
+                1017,
             ],
             'lower skilled rookie lost' => [
                 new Team(1000, 1000, 10),
                 new Team(2000, 2000, 75),
                 RatingSystem::LOST,
-                -3,
+                997,
             ],
             'lower skilled rookie won'  => [
                 new Team(1000, 1000, 10),
                 new Team(2000, 2000, 75),
                 RatingSystem::WON,
-                37,
+                1037,
             ],
 
             /**
@@ -235,39 +235,39 @@ class RatingSystemTest extends TestCase
                 new Team(2200, 2400, 100),
                 new Team(2400, 2400, 100),
                 RatingSystem::DRAW,
-                3,
+                2203,
             ],
             'lower skilled elite lost'  => [
                 new Team(2200, 2400, 100),
                 new Team(2400, 2400, 100),
                 RatingSystem::LOST,
-                -2,
+                2198,
             ],
             'lower skilled elite won'   => [
                 new Team(2200, 2400, 100),
                 new Team(2400, 2400, 100),
                 RatingSystem::WON,
-                8,
+                2208,
             ],
 
         ];
     }
 
     /**
-     * Test the rating change calculation for a given contestant versus a given
+     * Test the new rating calculation for a given contestant versus a given
      * opponent with a given outcome.
      *
      * @param Contestant $contestant
      * @param Contestant $opponent
      * @param int        $outcome
-     * @param int        $expectedRatingChange
+     * @param int        $expectedNewRating
      * @dataProvider contestantProvider
      */
-    public function testVariousContestantOutcomes(Contestant $contestant, Contestant $opponent, $outcome, $expectedRatingChange)
+    public function testVariousContestantOutcomes(Contestant $contestant, Contestant $opponent, $outcome, $expectedNewRating)
     {
         $this->assertEquals(
-            $expectedRatingChange,
-            RatingSystem::calculateRatingChange($contestant, $opponent, $outcome)
+            $expectedNewRating,
+            RatingSystem::calculateNewRating($contestant, $opponent, $outcome)
         );
     }
 }
