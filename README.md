@@ -4,7 +4,7 @@ PHP implementation of the [FIDE Rating System](https://www.fide.com/fide/handboo
 
 ## Requirements
 
-* PHP 5.6, or higher
+* PHP 7.0, or higher
 
 ## Installation
 
@@ -44,7 +44,7 @@ class Team implements Contestant
     /**
      * @inheritdoc
      */
-    public function getCurrentRating()
+    public function getCurrentRating(): int
     {
         return $this->rating;
     }
@@ -52,7 +52,7 @@ class Team implements Contestant
     /**
      * @inheritdoc
      */
-    public function getHighestRating()
+    public function getHighestRating(): int
     {
         return $this->highestRating;
     }
@@ -60,7 +60,7 @@ class Team implements Contestant
     /**
      * @inheritdoc
      */
-    public function getTotalMatchesPlayed()
+    public function getTotalMatchesPlayed(): int
     {
         return $this->matchesPlayed;
     }

@@ -35,7 +35,7 @@ class RatingSystem
      * @param  int|null   $k
      * @return int
      */
-    public static function calculateNewRating(Contestant $contestant, Contestant $opponent, $outcome, $k = null)
+    public static function calculateNewRating(Contestant $contestant, Contestant $opponent, int $outcome, int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
@@ -75,7 +75,7 @@ class RatingSystem
      * @param  Contestant $opponent
      * @return int
      */
-    private static function getRatingDifference(Contestant $contestant, Contestant $opponent)
+    private static function getRatingDifference(Contestant $contestant, Contestant $opponent): int
     {
         return min(
             abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),
@@ -90,7 +90,7 @@ class RatingSystem
      * @param  bool $isHigherRated
      * @return float
      */
-    private static function getScoreProbability($ratingDifference, $isHigherRated)
+    private static function getScoreProbability(int $ratingDifference, bool $isHigherRated): float
     {
         $ratingDifferences = [
             0   => 50,

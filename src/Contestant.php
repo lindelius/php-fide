@@ -12,19 +12,19 @@ interface Contestant
      *
      * @return int
      */
-    public function getCurrentRating();
+    public function getCurrentRating(): int;
 
     /**
      * Gets the contestant's highest rating.
      *
      * @return int
      */
-    public function getHighestRating();
+    public function getHighestRating(): int;
 
     /**
      * Gets the total number of matches that the contestant has played.
      *
      * @return int
      */
-    public function getTotalMatchesPlayed();
+    public function getTotalMatchesPlayed(): int;
 }
