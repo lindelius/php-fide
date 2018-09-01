@@ -26,6 +26,63 @@ class RatingSystem
     const LOST = -1;
 
     /**
+     * @var int[]
+     */
+    private static $ratingDifferences = [
+        0   => 50,
+        4   => 51,
+        11  => 52,
+        18  => 53,
+        26  => 54,
+        33  => 55,
+        40  => 56,
+        47  => 57,
+        54  => 58,
+        62  => 59,
+        69  => 60,
+        77  => 61,
+        84  => 62,
+        92  => 63,
+        99  => 64,
+        107 => 65,
+        114 => 66,
+        122 => 67,
+        130 => 68,
+        138 => 69,
+        146 => 70,
+        154 => 71,
+        163 => 72,
+        171 => 73,
+        180 => 74,
+        189 => 75,
+        198 => 76,
+        207 => 77,
+        216 => 78,
+        226 => 79,
+        236 => 80,
+        246 => 81,
+        257 => 82,
+        268 => 83,
+        279 => 84,
+        291 => 85,
+        303 => 86,
+        316 => 87,
+        329 => 88,
+        345 => 89,
+        358 => 90,
+        375 => 91,
+        392 => 92,
+        412 => 93,
+        433 => 94,
+        457 => 95,
+        485 => 96,
+        518 => 97,
+        560 => 98,
+        620 => 99,
+        735 => 100,
+    ];
+
+    /**
      * Calculates the new rating for a given contestant versus a given opponent
      * with a given outcome.
      *
@@ -44,7 +101,7 @@ class RatingSystem
             $isHigherRated
         );
 
-        if (!is_int($k)) {
+        if ($k === null) {
             if ($contestant->getTotalMatchesPlayed() < 30) {
                 $k = 40;
             } elseif ($contestant->getHighestRating() >= 2400) {
@@ -54,12 +111,12 @@ class RatingSystem
             }
         }
 
-        $score = 0.5;
-
         if ($outcome === static::WON) {
             $score = 1;
         } elseif ($outcome === static::LOST) {
             $score = 0;
+        } else {
+            $score = 0.5;
         }
 
         $ratingChange = (int) round(($score - $scoreProbability) * $k);
@@ -92,68 +149,14 @@ class RatingSystem
      */
     private static function getScoreProbability(int $ratingDifference, bool $isHigherRated): float
     {
-        $ratingDifferences = [
-            0   => 50,
-            4   => 51,
-            11  => 52,
-            18  => 53,
-            26  => 54,
-            33  => 55,
-            40  => 56,
-            47  => 57,
-            54  => 58,
-            62  => 59,
-            69  => 60,
-            77  => 61,
-            84  => 62,
-            92  => 63,
-            99  => 64,
-            107 => 65,
-            114 => 66,
-            122 => 67,
-            130 => 68,
-            138 => 69,
-            146 => 70,
-            154 => 71,
-            163 => 72,
-            171 => 73,
-            180 => 74,
-            189 => 75,
-            198 => 76,
-            207 => 77,
-            216 => 78,
-            226 => 79,
-            236 => 80,
-            246 => 81,
-            257 => 82,
-            268 => 83,
-            279 => 84,
-            291 => 85,
-            303 => 86,
-            316 => 87,
-            329 => 88,
-            345 => 89,
-            358 => 90,
-            375 => 91,
-            392 => 92,
-            412 => 93,
-            433 => 94,
-            457 => 95,
-            485 => 96,
-            518 => 97,
-            560 => 98,
-            620 => 99,
-            735 => 100,
-        ];
-
         $finalScoreProbability = 50;
 
-        foreach ($ratingDifferences as $difference => $scoreProbability) {
-            if ($ratingDifference >= $difference) {
-                $finalScoreProbability = $scoreProbability / 100;
-            } else {
+        foreach (static::$ratingDifferences as $difference => $scoreProbability) {
+            if ($ratingDifference < $difference) {
                 break;
             }
+
+            $finalScoreProbability = $scoreProbability / 100;
         }
 
         if (!$isHigherRated) {
