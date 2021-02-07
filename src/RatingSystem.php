@@ -3,8 +3,7 @@
 namespace Lindelius\FIDE;
 
 /**
- * An implementation of the FIDE Rating System
- * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
+ * Implementation of the FIDE Rating System ({@link https://handbook.fide.com}).
  */
 final class RatingSystem implements RatingSystemInterface
 {
