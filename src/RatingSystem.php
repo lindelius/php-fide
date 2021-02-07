@@ -6,7 +6,7 @@ namespace Lindelius\FIDE;
  * An implementation of the FIDE Rating System
  * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
  */
-final class RatingSystem
+final class RatingSystem implements RatingSystemInterface
 {
     public const WON = 1;
     public const DRAW = 0;
@@ -71,17 +71,35 @@ final class RatingSystem
         735 => 100,
     ];
 
+    public function calculateRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 0.5, $k);
+    }
+
+    public function calculateRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 0, $k);
+    }
+
+    public function calculateRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 1, $k);
+    }
+
     /**
-     * Calculate the new rating for a given contestant versus a given opponent
-     * with a given outcome.
+     * Calculate the new rating for a given contestant after a given outcome
+     * (the "score" parameter) against a given opponent.
+     *
+     * The score depends on the outcome and should be set to 0.5 after a draw,
+     * 0 after a loss, and 1 after a win.
      *
      * @param ContestantInterface $contestant
      * @param ContestantInterface $opponent
-     * @param int $outcome
+     * @param float $score
      * @param int|null $k
      * @return int
      */
-    public static function calculateNewRating(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, ?int $k = null): int
+    private function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
@@ -100,17 +118,35 @@ final class RatingSystem
             }
         }
 
-        if ($outcome === self::WON) {
-            $score = 1;
-        } elseif ($outcome === self::LOST) {
-            $score = 0;
-        } else {
-            $score = 0.5;
-        }
-
         $ratingChange = (int) round(($score - $scoreProbability) * $k);
 
         return $contestant->getCurrentRating() + $ratingChange;
+    }
+
+    /**
+     * Calculate the new rating for a given contestant versus a given opponent
+     * with a given outcome.
+     *
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $outcome
+     * @param int|null $k
+     * @return int
+     */
+    public static function calculateNewRating(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, ?int $k = null): int
+    {
+        switch ($outcome) {
+            case self::DRAW:
+                return (new self())->calculateRatingAfterDraw($contestant, $opponent, $k);
+
+            case self::LOST:
+                return (new self())->calculateRatingAfterLoss($contestant, $opponent, $k);
+
+            case self::WON:
+                return (new self())->calculateRatingAfterWin($contestant, $opponent, $k);
+        }
+
+        throw new \RuntimeException("Invalid outcome.");
     }
 
     /**
