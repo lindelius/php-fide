@@ -36,7 +36,24 @@ final class RatingSystemTest extends TestCase
         );
     }
 
-    private function ratingAfterDrawProvider(): array
+
+    /**
+     * @dataProvider ratingAfterDrawProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $outcome
+     * @param int $expectedNewRating
+     * @return void
+     */
+    public function testRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, int $expectedNewRating): void
+    {
+        $this->assertEquals(
+            $expectedNewRating,
+            (new RatingSystem())->calculateRatingAfterDraw($contestant, $opponent)
+        );
+    }
+
+    public function ratingAfterDrawProvider(): array
     {
         return [
 
@@ -102,7 +119,23 @@ final class RatingSystemTest extends TestCase
         ];
     }
 
-    private function ratingAfterLossProvider(): array
+    /**
+     * @dataProvider ratingAfterLossProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $outcome
+     * @param int $expectedNewRating
+     * @return void
+     */
+    public function testRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, int $expectedNewRating): void
+    {
+        $this->assertEquals(
+            $expectedNewRating,
+            (new RatingSystem())->calculateRatingAfterLoss($contestant, $opponent)
+        );
+    }
+
+    public function ratingAfterLossProvider(): array
     {
         return [
 
@@ -168,7 +201,23 @@ final class RatingSystemTest extends TestCase
         ];
     }
 
-    private function ratingAfterWinProvider(): array
+    /**
+     * @dataProvider ratingAfterWinProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $outcome
+     * @param int $expectedNewRating
+     * @return void
+     */
+    public function testRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, int $expectedNewRating): void
+    {
+        $this->assertEquals(
+            $expectedNewRating,
+            (new RatingSystem())->calculateRatingAfterWin($contestant, $opponent)
+        );
+    }
+
+    public function ratingAfterWinProvider(): array
     {
         return [
 
