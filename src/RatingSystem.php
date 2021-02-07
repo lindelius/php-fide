@@ -3,15 +3,10 @@
 namespace Lindelius\FIDE;
 
 /**
- * An implementation of the FIDE Rating System
- * ({@link https://www.fide.com/fide/handbook.html?id=172&view=article}).
+ * Implementation of the FIDE Rating System ({@link https://handbook.fide.com}).
  */
-final class RatingSystem
+final class RatingSystem implements RatingSystemInterface
 {
-    public const WON = 1;
-    public const DRAW = 0;
-    public const LOST = -1;
-
     /**
      * The current look-up table for rating differences and score probabilities.
      *
@@ -71,17 +66,35 @@ final class RatingSystem
         735 => 100,
     ];
 
+    public function calculateRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 0.5, $k);
+    }
+
+    public function calculateRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 0, $k);
+    }
+
+    public function calculateRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
+    {
+        return $this->calculateRating($contestant, $opponent, 1, $k);
+    }
+
     /**
-     * Calculate the new rating for a given contestant versus a given opponent
-     * with a given outcome.
+     * Calculate the new rating for a given contestant after a given outcome
+     * (the "score" parameter) against a given opponent.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
-     * @param int $outcome
+     * The score depends on the outcome and should be set to 0.5 after a draw,
+     * 0 after a loss, and 1 after a win.
+     *
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param float $score
      * @param int|null $k
      * @return int
      */
-    public static function calculateNewRating(Contestant $contestant, Contestant $opponent, int $outcome, ?int $k = null): int
+    private function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
@@ -100,14 +113,6 @@ final class RatingSystem
             }
         }
 
-        if ($outcome === self::WON) {
-            $score = 1;
-        } elseif ($outcome === self::LOST) {
-            $score = 0;
-        } else {
-            $score = 0.5;
-        }
-
         $ratingChange = (int) round(($score - $scoreProbability) * $k);
 
         return $contestant->getCurrentRating() + $ratingChange;
@@ -117,11 +122,11 @@ final class RatingSystem
      * Get the absolute rating difference between a given contestant and a
      * given opponent.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
      * @return int
      */
-    private static function getRatingDifference(Contestant $contestant, Contestant $opponent): int
+    private static function getRatingDifference(ContestantInterface $contestant, ContestantInterface $opponent): int
     {
         return min(
             abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),

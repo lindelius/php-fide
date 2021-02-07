@@ -2,252 +2,222 @@
 
 namespace Lindelius\FIDE\Tests;
 
-use Lindelius\FIDE\Contestant;
+use Lindelius\FIDE\ContestantInterface;
 use Lindelius\FIDE\RatingSystem;
 use PHPUnit\Framework\TestCase;
 
 final class RatingSystemTest extends TestCase
 {
     /**
-     * Test the new rating calculation for a given contestant versus a given
-     * opponent with a given outcome.
-     *
-     * @dataProvider ratingChangeProvider
-     * @param Contestant $contestant
-     * @param Contestant $opponent
-     * @param int $outcome
+     * @dataProvider ratingAfterDrawProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
      * @param int $expectedNewRating
      * @return void
      */
-    public function testRatingChanges(Contestant $contestant, Contestant $opponent, int $outcome, int $expectedNewRating): void
+    public function testRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
     {
         $this->assertEquals(
             $expectedNewRating,
-            RatingSystem::calculateNewRating($contestant, $opponent, $outcome)
+            (new RatingSystem())->calculateRatingAfterDraw($contestant, $opponent)
         );
     }
 
-    /**
-     * Complete data set for testing rating changes for various contestants.
-     *
-     * @return array[]
-     */
-    public function ratingChangeProvider(): array
-    {
-        return array_merge(
-            $this->equallySkilledContestantProvider(),
-            $this->higherSkilledContestantProvider(),
-            $this->lowerSkilledContestantProvider()
-        );
-    }
-
-    /**
-     * Data set for testing rating changes for equally skilled contestants.
-     *
-     * @return array[]
-     */
-    private function equallySkilledContestantProvider(): array
+    public function ratingAfterDrawProvider(): array
     {
         return [
 
-            'equally skilled draw' => [
+            'equally skilled contestant' => [
                 new Team(1000, 1000, 35),
                 new Team(1000, 1000, 35),
-                RatingSystem::DRAW,
                 1000,
             ],
-            'equally skilled lost' => [
-                new Team(1000, 1000, 35),
-                new Team(1000, 1000, 35),
-                RatingSystem::LOST,
-                990,
-            ],
-            'equally skilled won' => [
-                new Team(1000, 1000, 35),
-                new Team(1000, 1000, 35),
-                RatingSystem::WON,
-                1010,
-            ],
-
-            // Rookie contestants (less than 30 matches played)
-            'equally skilled rookie draw' => [
-                new Team(1000, 1000, 10),
-                new Team(1000, 1000, 10),
-                RatingSystem::DRAW,
-                1000,
-            ],
-            'equally skilled rookie lost' => [
-                new Team(1000, 1000, 10),
-                new Team(1000, 1000, 10),
-                RatingSystem::LOST,
-                980,
-            ],
-            'equally skilled rookie won' => [
-                new Team(1000, 1000, 10),
-                new Team(1000, 1000, 10),
-                RatingSystem::WON,
-                1020,
-            ],
-
-            // Highly skilled contestants (have had a rating of 2400, or higher)
-            'equally skilled elite draw' => [
-                new Team(2200, 2400, 100),
-                new Team(2200, 2200, 75),
-                RatingSystem::DRAW,
-                2200,
-            ],
-            'equally skilled elite lost' => [
-                new Team(2200, 2400, 100),
-                new Team(2200, 2200, 75),
-                RatingSystem::LOST,
-                2195,
-            ],
-            'equally skilled elite won' => [
-                new Team(2200, 2400, 100),
-                new Team(2200, 2200, 75),
-                RatingSystem::WON,
-                2205,
-            ],
-
-        ];
-    }
-
-    /**
-     * Data set for testing rating changes for higher skilled contestants.
-     *
-     * @return array[]
-     */
-    private function higherSkilledContestantProvider(): array
-    {
-        return [
-
-            'higher skilled draw' => [
+            'higher skilled contestant' => [
                 new Team(2000, 2000, 75),
                 new Team(1000, 1000, 35),
-                RatingSystem::DRAW,
                 1992,
             ],
-            'higher skilled lost' => [
-                new Team(2000, 2000, 75),
+            'lower skilled contestant' => [
                 new Team(1000, 1000, 35),
-                RatingSystem::LOST,
-                1982,
-            ],
-            'higher skilled won' => [
                 new Team(2000, 2000, 75),
-                new Team(1000, 1000, 35),
-                RatingSystem::WON,
-                2002,
+                1008,
             ],
 
             // Rookie contestants (less than 30 matches played)
-            'higher skilled rookie draw' => [
+            'equally skilled rookie' => [
+                new Team(1000, 1000, 10),
+                new Team(1000, 1000, 10),
+                1000,
+            ],
+            'higher skilled rookie' => [
                 new Team(1100, 1100, 20),
                 new Team(1000, 1000, 10),
-                RatingSystem::DRAW,
                 1094,
             ],
-            'higher skilled rookie lost' => [
-                new Team(1100, 1100, 20),
+            'lower skilled rookie' => [
                 new Team(1000, 1000, 10),
-                RatingSystem::LOST,
-                1074,
-            ],
-            'higher skilled rookie won' => [
-                new Team(1100, 1100, 20),
-                new Team(1000, 1000, 10),
-                RatingSystem::WON,
-                1114,
+                new Team(2000, 2000, 75),
+                1017,
             ],
 
             // Highly skilled contestants (have had a rating of 2400, or higher)
-            'higher skilled elite draw' => [
+            'equally skilled elite' => [
+                new Team(2200, 2400, 100),
+                new Team(2200, 2200, 75),
+                2200,
+            ],
+            'higher skilled elite' => [
                 new Team(2400, 2400, 100),
                 new Team(2200, 2200, 75),
-                RatingSystem::DRAW,
                 2397,
             ],
-            'higher skilled elite lost' => [
+            'lower skilled elite' => [
+                new Team(2200, 2400, 100),
                 new Team(2400, 2400, 100),
-                new Team(2200, 2200, 75),
-                RatingSystem::LOST,
-                2392,
-            ],
-            'higher skilled elite won' => [
-                new Team(2400, 2400, 100),
-                new Team(2200, 2200, 75),
-                RatingSystem::WON,
-                2402,
+                2203,
             ],
 
         ];
     }
 
     /**
-     * Data set for testing rating changes for lower skilled contestants.
-     *
-     * @return array[]
+     * @dataProvider ratingAfterLossProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $expectedNewRating
+     * @return void
      */
-    private function lowerSkilledContestantProvider(): array
+    public function testRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
+    {
+        $this->assertEquals(
+            $expectedNewRating,
+            (new RatingSystem())->calculateRatingAfterLoss($contestant, $opponent)
+        );
+    }
+
+    public function ratingAfterLossProvider(): array
     {
         return [
 
-            'lower skilled draw' => [
+            'equally skilled contestant' => [
                 new Team(1000, 1000, 35),
-                new Team(2000, 2000, 75),
-                RatingSystem::DRAW,
-                1008,
+                new Team(1000, 1000, 35),
+                990,
             ],
-            'lower skilled lost' => [
+            'higher skilled contestant' => [
+                new Team(2000, 2000, 75),
+                new Team(1000, 1000, 35),
+                1982,
+            ],
+            'lower skilled contestant' => [
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
-                RatingSystem::LOST,
                 998,
             ],
-            'lower skilled won' => [
+
+            // Rookie contestants (less than 30 matches played)
+            'equally skilled rookie' => [
+                new Team(1000, 1000, 10),
+                new Team(1000, 1000, 10),
+                980,
+            ],
+            'higher skilled rookie' => [
+                new Team(1100, 1100, 20),
+                new Team(1000, 1000, 10),
+                1074,
+            ],
+            'lower skilled rookie' => [
+                new Team(1000, 1000, 10),
+                new Team(2000, 2000, 75),
+                997,
+            ],
+
+            // Highly skilled contestants (have had a rating of 2400, or higher)
+            'equally skilled elite' => [
+                new Team(2200, 2400, 100),
+                new Team(2200, 2200, 75),
+                2195,
+            ],
+            'higher skilled elite' => [
+                new Team(2400, 2400, 100),
+                new Team(2200, 2200, 75),
+                2392,
+            ],
+            'lower skilled elite' => [
+                new Team(2200, 2400, 100),
+                new Team(2400, 2400, 100),
+                2198,
+            ],
+
+        ];
+    }
+
+    /**
+     * @dataProvider ratingAfterWinProvider
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
+     * @param int $expectedNewRating
+     * @return void
+     */
+    public function testRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
+    {
+        $this->assertEquals(
+            $expectedNewRating,
+            (new RatingSystem())->calculateRatingAfterWin($contestant, $opponent)
+        );
+    }
+
+    public function ratingAfterWinProvider(): array
+    {
+        return [
+
+            'equally skilled contestant' => [
+                new Team(1000, 1000, 35),
+                new Team(1000, 1000, 35),
+                1010,
+            ],
+            'higher skilled contestant' => [
+                new Team(2000, 2000, 75),
+                new Team(1000, 1000, 35),
+                2002,
+            ],
+            'lower skilled contestant' => [
                 new Team(1000, 1000, 35),
                 new Team(2000, 2000, 75),
-                RatingSystem::WON,
                 1018,
             ],
 
             // Rookie contestants (less than 30 matches played)
-            'lower skilled rookie draw' => [
+            'equally skilled rookie' => [
                 new Team(1000, 1000, 10),
-                new Team(2000, 2000, 75),
-                RatingSystem::DRAW,
-                1017,
+                new Team(1000, 1000, 10),
+                1020,
             ],
-            'lower skilled rookie lost' => [
+            'higher skilled rookie' => [
+                new Team(1100, 1100, 20),
                 new Team(1000, 1000, 10),
-                new Team(2000, 2000, 75),
-                RatingSystem::LOST,
-                997,
+                1114,
             ],
-            'lower skilled rookie won' => [
+            'lower skilled rookie' => [
                 new Team(1000, 1000, 10),
                 new Team(2000, 2000, 75),
-                RatingSystem::WON,
                 1037,
             ],
 
             // Highly skilled contestants (have had a rating of 2400, or higher)
-            'lower skilled elite draw' => [
+            'equally skilled elite' => [
                 new Team(2200, 2400, 100),
-                new Team(2400, 2400, 100),
-                RatingSystem::DRAW,
-                2203,
+                new Team(2200, 2200, 75),
+                2205,
             ],
-            'lower skilled elite lost' => [
-                new Team(2200, 2400, 100),
+            'higher skilled elite' => [
                 new Team(2400, 2400, 100),
-                RatingSystem::LOST,
-                2198,
+                new Team(2200, 2200, 75),
+                2402,
             ],
-            'lower skilled elite won' => [
+            'lower skilled elite' => [
                 new Team(2200, 2400, 100),
                 new Team(2400, 2400, 100),
-                RatingSystem::WON,
                 2208,
             ],
 

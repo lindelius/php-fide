@@ -16,12 +16,12 @@ composer require lindelius/php-fide
 
 ## Usage
 
-The first step is to implement the `Lindelius\FIDE\Contestant` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
+The first step is to implement the `Lindelius\FIDE\ContestantInterface` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
 
 ```php
-use Lindelius\FIDE\Contestant;
+use Lindelius\FIDE\ContestantInterface;
 
-class Team implements Contestant
+class Team implements ContestantInterface
 {
     private int $highestRating;
     private int $matchesPlayed;
@@ -49,11 +49,16 @@ class Team implements Contestant
 }
 ```
 
-Then, use the static `Lindelius\FIDE\RatingSystem::calculateNewRating()` method to calculate the new ratings for the contestants after each match.
+Then, use the appropriate `Lindelius\FIDE\RatingSystemInterface` method to calculate the new ratings for the contestants after each match.
 
 ```php
-use Lindelius\FIDE\RatingSystem;
+$ratingSystem = new Lindelius\FIDE\RatingSystem();
 
-$teamOne->setCurrentRating(RatingSystem::calculateNewRating($teamOne, $teamTwo, RatingSystem::WON));
-$teamTwo->setCurrentRating(RatingSystem::calculateNewRating($teamTwo, $teamOne, RatingSystem::LOST));
+// Calculate new ratings for matches with a winner
+$teamOne->setCurrentRating($ratingSystem->calculateRatingAfterWin($teamOne, $teamTwo));
+$teamTwo->setCurrentRating($ratingSystem->calculateRatingAfterLoss($teamTwo, $teamOne));
+
+// Calculate new ratings for drawn matches
+$teamOne->setCurrentRating($ratingSystem->calculateRatingAfterDraw($teamOne, $teamTwo));
+$teamTwo->setCurrentRating($ratingSystem->calculateRatingAfterDraw($teamTwo, $teamOne));
 ```
