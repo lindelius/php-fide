@@ -2,27 +2,24 @@
 
 namespace Lindelius\FIDE;
 
-/**
- * Interface Contestant
- */
 interface Contestant
 {
     /**
-     * Gets the contestant's current rating.
+     * Get the contestant's current rating.
      *
      * @return int
      */
     public function getCurrentRating(): int;
 
     /**
-     * Gets the contestant's highest rating.
+     * Get the contestant's highest rating.
      *
      * @return int
      */
     public function getHighestRating(): int;
 
     /**
-     * Gets the total number of matches that the contestant has played.
+     * Get the total number of matches that the contestant has played.
      *
      * @return int
      */

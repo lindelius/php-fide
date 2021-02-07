@@ -1,8 +1,8 @@
 {
     "name": "lindelius/php-fide",
     "description": "PHP implementation of the FIDE Rating System",
-    "keywords": ["php", "elo", "rating", "tournament", "ladder", "fide", "helpers"],
-    "homepage": "https://github.com/lindelius/fide",
+    "keywords": ["php", "elo", "rating", "fide"],
+    "homepage": "https://github.com/lindelius/php-fide",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -12,11 +12,10 @@
         }
     ],
     "require": {
-        "php": "^7.0"
+        "php": "^7.4"
     },
     "require-dev": {
-        "php": "^7.1",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -26,6 +25,11 @@
     "autoload-dev": {
         "psr-4": {
             "Lindelius\\FIDE\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
         }
     }
 }
