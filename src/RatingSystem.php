@@ -7,10 +7,6 @@ namespace Lindelius\FIDE;
  */
 final class RatingSystem implements RatingSystemInterface
 {
-    public const WON = 1;
-    public const DRAW = 0;
-    public const LOST = -1;
-
     /**
      * The current look-up table for rating differences and score probabilities.
      *
@@ -120,32 +116,6 @@ final class RatingSystem implements RatingSystemInterface
         $ratingChange = (int) round(($score - $scoreProbability) * $k);
 
         return $contestant->getCurrentRating() + $ratingChange;
-    }
-
-    /**
-     * Calculate the new rating for a given contestant versus a given opponent
-     * with a given outcome.
-     *
-     * @param ContestantInterface $contestant
-     * @param ContestantInterface $opponent
-     * @param int $outcome
-     * @param int|null $k
-     * @return int
-     */
-    public static function calculateNewRating(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, ?int $k = null): int
-    {
-        switch ($outcome) {
-            case self::DRAW:
-                return (new self())->calculateRatingAfterDraw($contestant, $opponent, $k);
-
-            case self::LOST:
-                return (new self())->calculateRatingAfterLoss($contestant, $opponent, $k);
-
-            case self::WON:
-                return (new self())->calculateRatingAfterWin($contestant, $opponent, $k);
-        }
-
-        throw new \RuntimeException("Invalid outcome.");
     }
 
     /**
