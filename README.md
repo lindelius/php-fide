@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/lindelius/php-fide.svg?style=shield)](https://circleci.com/gh/lindelius/php-fide)
 
-A PHP implementation of the [FIDE Rating System](https://handbook.fide.com).
+A zero-dependency PHP implementation of the [FIDE Rating System](https://handbook.fide.com).
 
 ## Requirements
 
