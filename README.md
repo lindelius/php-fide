@@ -4,62 +4,44 @@ PHP implementation of the [FIDE Rating System](https://www.fide.com/fide/handboo
 
 ## Requirements
 
-* PHP 7.0, or higher
+* PHP 7.4, or higher
 
 ## Installation
 
-In order to install this library, issue the following Composer command from your project's root folder:
+In order to install the latest version of this library, issue the following Composer command from your project's root folder:
 
 ```
-composer require "lindelius/php-fide=^0.3"
+composer require lindelius/php-fide
 ```
 
 ## Usage
 
-First of all, implement the `Lindelius\FIDE\Contestant` interface in your ladder participant model (the object holding rating information about a given contestant in a given ladder or tournament).
+The first step is to implement the `Lindelius\FIDE\Contestant` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
 
 ```php
 use Lindelius\FIDE\Contestant;
 
-/**
- * Class Team
- */
 class Team implements Contestant
 {
-    /**
-     * @var int
-     */
-    public $highestRating;
+    private int $highestRating;
+    private int $matchesPlayed;
+    private int $rating;
 
-    /**
-     * @var int
-     */
-    public $matchesPlayed;
+    public function setCurrentRating(int $newRating): void
+    {
+        $this->rating = $newRating;
+    }
 
-    /**
-     * @var int
-     */
-    public $rating;
-    
-    /**
-     * @inheritdoc
-     */
     public function getCurrentRating(): int
     {
         return $this->rating;
     }
-    
-    /**
-     * @inheritdoc
-     */
+
     public function getHighestRating(): int
     {
         return $this->highestRating;
     }
-    
-    /**
-     * @inheritdoc
-     */
+
     public function getTotalMatchesPlayed(): int
     {
         return $this->matchesPlayed;
@@ -72,12 +54,6 @@ Then, use the static `Lindelius\FIDE\RatingSystem::calculateNewRating()` method 
 ```php
 use Lindelius\FIDE\RatingSystem;
 
-/**
- * Calculate the new rating for both contestants.
- *
- * @var Team $contestant
- * @var Team $opponent
- */
-$contestant->rating = RatingSystem::calculateNewRating($contestant, $opponent, RatingSystem::WON);
-$opponent->rating   = RatingSystem::calculateNewRating($opponent, $contestant, RatingSystem::LOST);
+$teamOne->setCurrentRating(RatingSystem::calculateNewRating($teamOne, $teamTwo, RatingSystem::WON));
+$teamTwo->setCurrentRating(RatingSystem::calculateNewRating($teamTwo, $teamOne, RatingSystem::LOST));
 ```
