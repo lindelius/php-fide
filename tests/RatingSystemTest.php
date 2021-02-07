@@ -2,7 +2,7 @@
 
 namespace Lindelius\FIDE\Tests;
 
-use Lindelius\FIDE\Contestant;
+use Lindelius\FIDE\ContestantInterface;
 use Lindelius\FIDE\RatingSystem;
 use PHPUnit\Framework\TestCase;
 
@@ -13,13 +13,13 @@ final class RatingSystemTest extends TestCase
      * opponent with a given outcome.
      *
      * @dataProvider ratingChangeProvider
-     * @param Contestant $contestant
-     * @param Contestant $opponent
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
      * @param int $outcome
      * @param int $expectedNewRating
      * @return void
      */
-    public function testRatingChanges(Contestant $contestant, Contestant $opponent, int $outcome, int $expectedNewRating): void
+    public function testRatingChanges(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, int $expectedNewRating): void
     {
         $this->assertEquals(
             $expectedNewRating,

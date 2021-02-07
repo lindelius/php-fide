@@ -2,9 +2,9 @@
 
 namespace Lindelius\FIDE\Tests;
 
-use Lindelius\FIDE\Contestant;
+use Lindelius\FIDE\ContestantInterface;
 
-final class Team implements Contestant
+final class Team implements ContestantInterface
 {
     private int $rating;
     private int $highestRating;

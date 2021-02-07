@@ -16,12 +16,12 @@ composer require lindelius/php-fide
 
 ## Usage
 
-The first step is to implement the `Lindelius\FIDE\Contestant` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
+The first step is to implement the `Lindelius\FIDE\ContestantInterface` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
 
 ```php
-use Lindelius\FIDE\Contestant;
+use Lindelius\FIDE\ContestantInterface;
 
-class Team implements Contestant
+class Team implements ContestantInterface
 {
     private int $highestRating;
     private int $matchesPlayed;

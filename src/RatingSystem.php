@@ -75,13 +75,13 @@ final class RatingSystem
      * Calculate the new rating for a given contestant versus a given opponent
      * with a given outcome.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
      * @param int $outcome
      * @param int|null $k
      * @return int
      */
-    public static function calculateNewRating(Contestant $contestant, Contestant $opponent, int $outcome, ?int $k = null): int
+    public static function calculateNewRating(ContestantInterface $contestant, ContestantInterface $opponent, int $outcome, ?int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
@@ -117,11 +117,11 @@ final class RatingSystem
      * Get the absolute rating difference between a given contestant and a
      * given opponent.
      *
-     * @param Contestant $contestant
-     * @param Contestant $opponent
+     * @param ContestantInterface $contestant
+     * @param ContestantInterface $opponent
      * @return int
      */
-    private static function getRatingDifference(Contestant $contestant, Contestant $opponent): int
+    private static function getRatingDifference(ContestantInterface $contestant, ContestantInterface $opponent): int
     {
         return min(
             abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),

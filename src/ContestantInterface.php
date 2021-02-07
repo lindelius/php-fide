@@ -2,7 +2,7 @@
 
 namespace Lindelius\FIDE;
 
-interface Contestant
+interface ContestantInterface
 {
     /**
      * Get the contestant's current rating.
