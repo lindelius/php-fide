@@ -1,5 +1,7 @@
 # php-fide
 
+[![CircleCI](https://circleci.com/gh/lindelius/php-fide.svg?style=shield)](https://circleci.com/gh/lindelius/php-fide)
+
 PHP implementation of the [FIDE Rating System](https://www.fide.com/fide/handbook.html?id=172&view=article).
 
 ## Requirements
