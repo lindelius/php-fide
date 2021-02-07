@@ -1,0 +1,29 @@
+version: 2.1
+
+jobs:
+  unit-tests:
+    parameters:
+      php_version:
+        default: "7.4"
+        type: string
+    docker:
+      - image: cimg/php:<< parameters.php_version >>
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: >-
+            composer install
+      - run:
+          name: "Run unit tests"
+          command: >-
+            vendor/bin/phpunit
+
+workflows:
+  all:
+    jobs:
+      - unit-tests:
+          matrix:
+            parameters:
+              php_version: [ "7.4", "8.0" ]

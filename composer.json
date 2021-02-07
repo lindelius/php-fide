@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": "^7.4"
+        "php": "^7.4||^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
@@ -25,11 +25,6 @@
     "autoload-dev": {
         "psr-4": {
             "Lindelius\\FIDE\\Tests\\": "tests/"
-        }
-    },
-    "config": {
-        "platform": {
-            "php": "7.4"
         }
     }
 }
