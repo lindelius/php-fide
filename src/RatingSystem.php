@@ -2,6 +2,10 @@
 
 namespace Lindelius\FIDE;
 
+use function abs;
+use function min;
+use function round;
+
 /**
  * Implementation of the FIDE Rating System ({@link https://handbook.fide.com}).
  */
@@ -68,17 +72,17 @@ final class RatingSystem implements RatingSystemInterface
 
     public function calculateRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return $this->calculateRating($contestant, $opponent, 0.5, $k);
+        return self::calculateRating($contestant, $opponent, 0.5, $k);
     }
 
     public function calculateRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return $this->calculateRating($contestant, $opponent, 0, $k);
+        return self::calculateRating($contestant, $opponent, 0.0, $k);
     }
 
     public function calculateRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return $this->calculateRating($contestant, $opponent, 1, $k);
+        return self::calculateRating($contestant, $opponent, 1.0, $k);
     }
 
     /**
@@ -94,7 +98,7 @@ final class RatingSystem implements RatingSystemInterface
      * @param int|null $k
      * @return int
      */
-    private function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
+    private static function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
