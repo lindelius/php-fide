@@ -18,7 +18,7 @@ composer require lindelius/php-fide
 
 ## Usage
 
-The first step is to implement the `Lindelius\FIDE\ContestantInterface` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
+**Step 1.** Implement the `Lindelius\FIDE\ContestantInterface` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
 
 ```php
 use Lindelius\FIDE\ContestantInterface;
@@ -28,11 +28,6 @@ class Team implements ContestantInterface
     private int $highestRating;
     private int $matchesPlayed;
     private int $rating;
-
-    public function setCurrentRating(int $newRating): void
-    {
-        $this->rating = $newRating;
-    }
 
     public function getCurrentRating(): int
     {
@@ -51,16 +46,16 @@ class Team implements ContestantInterface
 }
 ```
 
-Then, use the appropriate `Lindelius\FIDE\RatingSystemInterface` method to calculate the new ratings for the contestants after each match.
+**Step 2.** Use the appropriate `Lindelius\FIDE\RatingSystemInterface` method to calculate the new ratings for the contestants after each match.
 
 ```php
 $ratingSystem = new Lindelius\FIDE\RatingSystem();
 
 // Calculate new ratings for matches with a winner
-$teamOne->setCurrentRating($ratingSystem->calculateRatingAfterWin($teamOne, $teamTwo));
-$teamTwo->setCurrentRating($ratingSystem->calculateRatingAfterLoss($teamTwo, $teamOne));
+$newTeamOneRating = $ratingSystem->calculateRatingAfterWin($teamOne, $teamTwo);
+$newTeamTwoRating = $ratingSystem->calculateRatingAfterLoss($teamTwo, $teamOne);
 
 // Calculate new ratings for drawn matches
-$teamOne->setCurrentRating($ratingSystem->calculateRatingAfterDraw($teamOne, $teamTwo));
-$teamTwo->setCurrentRating($ratingSystem->calculateRatingAfterDraw($teamTwo, $teamOne));
+$newTeamOneRating = $ratingSystem->calculateRatingAfterDraw($teamOne, $teamTwo);
+$newTeamTwoRating = $ratingSystem->calculateRatingAfterDraw($teamTwo, $teamOne);
 ```
