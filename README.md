@@ -10,11 +10,13 @@ A zero-dependency PHP implementation of the [FIDE Rating System](https://handboo
 
 ## Installation
 
-In order to install the latest version of this library, issue the following Composer command from your project's root folder:
+If you are using Composer, you may install the latest version of this library by running the following command from your project's root folder:
 
 ```
 composer require lindelius/php-fide
 ```
+
+You may also manually download the library by navigating to the "Releases" page and then expanding the "Assets" section of the latest release.
 
 ## Usage
 
