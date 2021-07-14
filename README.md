@@ -20,7 +20,7 @@ You may also manually download the library by navigating to the "Releases" page 
 
 ## Usage
 
-**Step 1.** Implement the `Lindelius\FIDE\ContestantInterface` interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
+**Step 1.** Implement the [`Lindelius\FIDE\ContestantInterface`](src/ContestantInterface.php) interface in your contestant entity model (the object holding rating information about a given contestant in a given competition).
 
 ```php
 use Lindelius\FIDE\ContestantInterface;
@@ -48,16 +48,18 @@ class Team implements ContestantInterface
 }
 ```
 
-**Step 2.** Use the appropriate `Lindelius\FIDE\RatingSystemInterface` method to calculate the new ratings for the contestants after each match.
+**Step 2.** Use the appropriate [`Lindelius\FIDE\RatingSystemInterface`](src/RatingSystemInterface.php) method(s) to calculate the new ratings for the contestants after each match. Please note that all available methods return the new rating for the contestant, and not just the rating change.
+
+For matches with a winner, you will want to use the [`calculateRatingAfterWin()`](src/RatingSystemInterface.php#L38) and [`calculateRatingAfterLoss()`](src/RatingSystemInterface.php#L27) methods.
 
 ```php
-$ratingSystem = new Lindelius\FIDE\RatingSystem();
+$newRatingForWinner = $ratingSystem->calculateRatingAfterWin($winner, $loser);
+$newRatingForLoser = $ratingSystem->calculateRatingAfterLoss($loser, $winner);
+```
 
-// Calculate new ratings for matches with a winner
-$newTeamOneRating = $ratingSystem->calculateRatingAfterWin($teamOne, $teamTwo);
-$newTeamTwoRating = $ratingSystem->calculateRatingAfterLoss($teamTwo, $teamOne);
+And for matches that end in a draw, you will want to use the [`calculateRatingAfterDraw()`](src/RatingSystemInterface.php#L16) method.
 
-// Calculate new ratings for drawn matches
-$newTeamOneRating = $ratingSystem->calculateRatingAfterDraw($teamOne, $teamTwo);
-$newTeamTwoRating = $ratingSystem->calculateRatingAfterDraw($teamTwo, $teamOne);
+```php
+$newRatingForTeamA = $ratingSystem->calculateRatingAfterDraw($teamA, $teamB);
+$newRatingForTeamB = $ratingSystem->calculateRatingAfterDraw($teamB, $teamA);
 ```
