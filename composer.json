@@ -1,13 +1,12 @@
 {
     "name": "lindelius/php-fide",
     "description": "A zero-dependency PHP implementation of the FIDE Rating System.",
-    "keywords": ["php", "elo", "rating", "fide"],
+    "keywords": ["elo", "rating", "fide"],
     "homepage": "https://github.com/lindelius/php-fide",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Tom Lindelius",
-            "homepage": "https://lindelius.com",
             "role": "Developer"
         }
     ],
