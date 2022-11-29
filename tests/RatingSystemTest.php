@@ -17,7 +17,7 @@ final class RatingSystemTest extends TestCase
      */
     public function testRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expectedNewRating,
             (new RatingSystem())->calculateRatingAfterDraw($contestant, $opponent)
         );
@@ -89,7 +89,7 @@ final class RatingSystemTest extends TestCase
      */
     public function testRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expectedNewRating,
             (new RatingSystem())->calculateRatingAfterLoss($contestant, $opponent)
         );
@@ -161,7 +161,7 @@ final class RatingSystemTest extends TestCase
      */
     public function testRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, int $expectedNewRating): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             $expectedNewRating,
             (new RatingSystem())->calculateRatingAfterWin($contestant, $opponent)
         );
