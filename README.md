@@ -63,3 +63,13 @@ And for matches that end in a draw, you will want to use the [`calculateRatingAf
 $newRatingForTeamA = $ratingSystem->calculateRatingAfterDraw($teamA, $teamB);
 $newRatingForTeamB = $ratingSystem->calculateRatingAfterDraw($teamB, $teamA);
 ```
+
+## Benchmarking
+
+This library is using [PHPBench](https://github.com/phpbench/phpbench) for benchmarking.
+
+You can benchmark the library on your own system by running the following command from the library's root folder:
+
+```
+./vendor/bin/phpbench run --report=default
+```
