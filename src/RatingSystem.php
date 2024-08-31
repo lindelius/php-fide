@@ -137,10 +137,9 @@ final class RatingSystem implements RatingSystemInterface
      */
     private static function getRatingDifference(ContestantInterface $contestant, ContestantInterface $opponent): int
     {
-        return min(
-            abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),
-            400
-        );
+        // As per the FIDE rules, any rating difference above 400 should be
+        // treated as if the rating difference was 400.
+        return min(400, abs($contestant->getCurrentRating() - $opponent->getCurrentRating()));
     }
 
     /**
@@ -152,20 +151,24 @@ final class RatingSystem implements RatingSystemInterface
      */
     private static function getScoreProbability(int $ratingDifference, bool $isHigherRated): float
     {
-        $finalScoreProbability = 50;
+        $finalScoreProbability = 0;
 
         foreach (self::$ratingDifferences as $difference => $scoreProbability) {
             if ($ratingDifference < $difference) {
                 break;
             }
 
-            $finalScoreProbability = $scoreProbability / 100;
+            $finalScoreProbability = $scoreProbability;
         }
 
         if (!$isHigherRated) {
-            $finalScoreProbability = 1 - $finalScoreProbability;
+            // The score probability for lower rated players is the exact
+            // reverse of the probability for higher rated players (which is
+            // what we include in the look-up table), so in those cases we need
+            // to flip the percentage value.
+            $finalScoreProbability = 100 - $finalScoreProbability;
         }
 
-        return (float) $finalScoreProbability;
+        return (float) ($finalScoreProbability / 100);
     }
 }
