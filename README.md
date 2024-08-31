@@ -6,7 +6,7 @@ A zero-dependency PHP implementation of the [FIDE Rating System](https://handboo
 
 ## Requirements
 
-* PHP 7.4, or higher
+* PHP 8.1, or higher
 
 ## Installation
 

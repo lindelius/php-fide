@@ -4,7 +4,7 @@ jobs:
   unit-tests:
     parameters:
       php_version:
-        default: "7.4"
+        default: "8.1"
         type: string
     docker:
       - image: cimg/php:<< parameters.php_version >>
@@ -26,4 +26,4 @@ workflows:
       - unit-tests:
           matrix:
             parameters:
-              php_version: [ "7.4", "8.0", "8.1" ]
+              php_version: [ "8.1", "8.2", "8.3" ]
