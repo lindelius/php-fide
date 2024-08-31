@@ -12,7 +12,7 @@ use Lindelius\FIDE\RatingSystemInterface;
  * @Revs(10000)
  * @Warmup(2)
  */
-final class SimpleBench
+final class RatingSystemBench
 {
     private ?ContestantInterface $a = null;
     private ?ContestantInterface $b = null;

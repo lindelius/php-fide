@@ -25,11 +25,13 @@ You may also manually download the library by navigating to the "Releases" page 
 ```php
 use Lindelius\FIDE\ContestantInterface;
 
-class Team implements ContestantInterface
+final class MyContestant implements ContestantInterface
 {
     private int $highestRating;
     private int $matchesPlayed;
     private int $rating;
+    
+    // ...
 
     public function getCurrentRating(): int
     {
@@ -60,8 +62,8 @@ $newRatingForLoser = $ratingSystem->calculateRatingAfterLoss($loser, $winner);
 And for matches that end in a draw, you will want to use the [`calculateRatingAfterDraw()`](src/RatingSystemInterface.php#L16) method.
 
 ```php
-$newRatingForTeamA = $ratingSystem->calculateRatingAfterDraw($teamA, $teamB);
-$newRatingForTeamB = $ratingSystem->calculateRatingAfterDraw($teamB, $teamA);
+$newRatingForContestant = $ratingSystem->calculateRatingAfterDraw($contestant, $opponent);
+$newRatingForOpponent = $ratingSystem->calculateRatingAfterDraw($opponent, $contestant);
 ```
 
 ## Benchmarking
