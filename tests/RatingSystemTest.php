@@ -6,6 +6,12 @@ use Lindelius\FIDE\ContestantInterface;
 use Lindelius\FIDE\RatingSystem;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Unit tests for verifying that the RatingSystem implementation matches the
+ * official FIDE rating calculator.
+ *
+ * @see https://ratings.fide.com/calc.phtml
+ */
 final class RatingSystemTest extends TestCase
 {
     /**

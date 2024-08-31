@@ -7,7 +7,12 @@ use function min;
 use function round;
 
 /**
- * Implementation of the FIDE Rating System ({@link https://handbook.fide.com}).
+ * Implementation of the FIDE Rating System.
+ *
+ * Up-to-date with the FIDE Rating Regulations effective from 1 March 2024.
+ *
+ * @see https://handbook.fide.com
+ * @see https://ratings.fide.com/calc.phtml
  */
 final class RatingSystem implements RatingSystemInterface
 {
