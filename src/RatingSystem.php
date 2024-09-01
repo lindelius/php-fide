@@ -7,7 +7,12 @@ use function min;
 use function round;
 
 /**
- * Implementation of the FIDE Rating System ({@link https://handbook.fide.com}).
+ * Implementation of the FIDE Rating System.
+ *
+ * Up-to-date with the FIDE Rating Regulations effective from 1 March 2024.
+ *
+ * @see https://handbook.fide.com
+ * @see https://ratings.fide.com/calc.phtml
  */
 final class RatingSystem implements RatingSystemInterface
 {
@@ -16,7 +21,7 @@ final class RatingSystem implements RatingSystemInterface
      *
      * @var int[]
      */
-    private static array $ratingDifferences = [
+    private array $ratingDifferences = [
         0 => 50,
         4 => 51,
         11 => 52,
@@ -72,17 +77,17 @@ final class RatingSystem implements RatingSystemInterface
 
     public function calculateRatingAfterDraw(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return self::calculateRating($contestant, $opponent, 0.5, $k);
+        return $this->calculateRating($contestant, $opponent, 0.5, $k);
     }
 
     public function calculateRatingAfterLoss(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return self::calculateRating($contestant, $opponent, 0.0, $k);
+        return $this->calculateRating($contestant, $opponent, 0.0, $k);
     }
 
     public function calculateRatingAfterWin(ContestantInterface $contestant, ContestantInterface $opponent, ?int $k = null): int
     {
-        return self::calculateRating($contestant, $opponent, 1.0, $k);
+        return $this->calculateRating($contestant, $opponent, 1.0, $k);
     }
 
     /**
@@ -98,12 +103,12 @@ final class RatingSystem implements RatingSystemInterface
      * @param int|null $k
      * @return int
      */
-    private static function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
+    private function calculateRating(ContestantInterface $contestant, ContestantInterface $opponent, float $score, ?int $k = null): int
     {
         $isHigherRated = $contestant->getCurrentRating() >= $opponent->getCurrentRating();
 
-        $scoreProbability = self::getScoreProbability(
-            self::getRatingDifference($contestant, $opponent),
+        $scoreProbability = $this->getScoreProbability(
+            $this->getRatingDifference($contestant, $opponent),
             $isHigherRated
         );
 
@@ -130,12 +135,11 @@ final class RatingSystem implements RatingSystemInterface
      * @param ContestantInterface $opponent
      * @return int
      */
-    private static function getRatingDifference(ContestantInterface $contestant, ContestantInterface $opponent): int
+    private function getRatingDifference(ContestantInterface $contestant, ContestantInterface $opponent): int
     {
-        return min(
-            abs($contestant->getCurrentRating() - $opponent->getCurrentRating()),
-            400
-        );
+        // As per the FIDE rules, any rating difference above 400 should be
+        // treated as if the rating difference was 400.
+        return min(400, abs($contestant->getCurrentRating() - $opponent->getCurrentRating()));
     }
 
     /**
@@ -145,22 +149,26 @@ final class RatingSystem implements RatingSystemInterface
      * @param bool $isHigherRated
      * @return float
      */
-    private static function getScoreProbability(int $ratingDifference, bool $isHigherRated): float
+    private function getScoreProbability(int $ratingDifference, bool $isHigherRated): float
     {
-        $finalScoreProbability = 50;
+        $finalScoreProbability = 0;
 
-        foreach (self::$ratingDifferences as $difference => $scoreProbability) {
+        foreach ($this->ratingDifferences as $difference => $scoreProbability) {
             if ($ratingDifference < $difference) {
                 break;
             }
 
-            $finalScoreProbability = $scoreProbability / 100;
+            $finalScoreProbability = $scoreProbability;
         }
 
         if (!$isHigherRated) {
-            $finalScoreProbability = 1 - $finalScoreProbability;
+            // The score probability for lower rated players is the exact
+            // reverse of the probability for higher rated players (which is
+            // what we include in the look-up table), so in those cases we need
+            // to flip the percentage value.
+            $finalScoreProbability = 100 - $finalScoreProbability;
         }
 
-        return (float) $finalScoreProbability;
+        return (float) ($finalScoreProbability / 100);
     }
 }

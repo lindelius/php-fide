@@ -6,7 +6,7 @@ A zero-dependency PHP implementation of the [FIDE Rating System](https://handboo
 
 ## Requirements
 
-* PHP 7.4, or higher
+* PHP 8.1, or higher
 
 ## Installation
 
@@ -25,11 +25,13 @@ You may also manually download the library by navigating to the "Releases" page 
 ```php
 use Lindelius\FIDE\ContestantInterface;
 
-class Team implements ContestantInterface
+final class MyContestant implements ContestantInterface
 {
     private int $highestRating;
     private int $matchesPlayed;
     private int $rating;
+    
+    // ...
 
     public function getCurrentRating(): int
     {
@@ -60,6 +62,16 @@ $newRatingForLoser = $ratingSystem->calculateRatingAfterLoss($loser, $winner);
 And for matches that end in a draw, you will want to use the [`calculateRatingAfterDraw()`](src/RatingSystemInterface.php#L16) method.
 
 ```php
-$newRatingForTeamA = $ratingSystem->calculateRatingAfterDraw($teamA, $teamB);
-$newRatingForTeamB = $ratingSystem->calculateRatingAfterDraw($teamB, $teamA);
+$newRatingForContestant = $ratingSystem->calculateRatingAfterDraw($contestant, $opponent);
+$newRatingForOpponent = $ratingSystem->calculateRatingAfterDraw($opponent, $contestant);
+```
+
+## Benchmarking
+
+This library is using [PHPBench](https://github.com/phpbench/phpbench) for benchmarking.
+
+You can benchmark the library on your own system by running the following command from the library's root folder:
+
+```
+./vendor/bin/phpbench run --report=default
 ```
