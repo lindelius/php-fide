@@ -33,6 +33,11 @@ final class RatingSystemTest extends TestCase
     {
         return [
 
+            "lower skilled contestant" => [
+                new StaticContestant(1000, 1000, 35),
+                new StaticContestant(2000, 2000, 75),
+                1008,
+            ],
             "equally skilled contestant" => [
                 new StaticContestant(1000, 1000, 35),
                 new StaticContestant(1000, 1000, 35),
@@ -43,13 +48,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 35),
                 1992,
             ],
-            "lower skilled contestant" => [
-                new StaticContestant(1000, 1000, 35),
-                new StaticContestant(2000, 2000, 75),
-                1008,
+            "much higher skilled contestant" => [
+                new StaticContestant(2300, 2300, 75),
+                new StaticContestant(1400, 1400, 35),
+                2292,
             ],
 
             // Rookie contestants (less than 30 matches played)
+            "lower skilled rookie" => [
+                new StaticContestant(1000, 1000, 10),
+                new StaticContestant(2000, 2000, 75),
+                1017,
+            ],
             "equally skilled rookie" => [
                 new StaticContestant(1000, 1000, 10),
                 new StaticContestant(1000, 1000, 10),
@@ -60,13 +70,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 10),
                 1094,
             ],
-            "lower skilled rookie" => [
-                new StaticContestant(1000, 1000, 10),
-                new StaticContestant(2000, 2000, 75),
-                1017,
+            "much higher skilled rookie" => [
+                new StaticContestant(2300, 2300, 20),
+                new StaticContestant(1400, 1400, 10),
+                2283,
             ],
 
             // Highly skilled contestants (have had a rating of 2400, or higher)
+            "lower skilled elite" => [
+                new StaticContestant(2200, 2400, 100),
+                new StaticContestant(2400, 2400, 100),
+                2203,
+            ],
             "equally skilled elite" => [
                 new StaticContestant(2200, 2400, 100),
                 new StaticContestant(2200, 2200, 75),
@@ -77,10 +92,10 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(2200, 2200, 75),
                 2397,
             ],
-            "lower skilled elite" => [
-                new StaticContestant(2200, 2400, 100),
-                new StaticContestant(2400, 2400, 100),
-                2203,
+            "much higher skilled elite" => [
+                new StaticContestant(2300, 2550, 100),
+                new StaticContestant(1400, 1400, 75),
+                2296,
             ],
 
         ];
@@ -105,6 +120,11 @@ final class RatingSystemTest extends TestCase
     {
         return [
 
+            "lower skilled contestant" => [
+                new StaticContestant(1000, 1000, 35),
+                new StaticContestant(2000, 2000, 75),
+                998,
+            ],
             "equally skilled contestant" => [
                 new StaticContestant(1000, 1000, 35),
                 new StaticContestant(1000, 1000, 35),
@@ -115,13 +135,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 35),
                 1982,
             ],
-            "lower skilled contestant" => [
-                new StaticContestant(1000, 1000, 35),
-                new StaticContestant(2000, 2000, 75),
-                998,
+            "much higher skilled contestant" => [
+                new StaticContestant(2300, 2300, 75),
+                new StaticContestant(1400, 1400, 35),
+                2282,
             ],
 
             // Rookie contestants (less than 30 matches played)
+            "lower skilled rookie" => [
+                new StaticContestant(1000, 1000, 10),
+                new StaticContestant(2000, 2000, 75),
+                997,
+            ],
             "equally skilled rookie" => [
                 new StaticContestant(1000, 1000, 10),
                 new StaticContestant(1000, 1000, 10),
@@ -132,13 +157,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 10),
                 1074,
             ],
-            "lower skilled rookie" => [
-                new StaticContestant(1000, 1000, 10),
-                new StaticContestant(2000, 2000, 75),
-                997,
+            "much higher skilled rookie" => [
+                new StaticContestant(2300, 2300, 20),
+                new StaticContestant(1400, 1400, 10),
+                2263,
             ],
 
             // Highly skilled contestants (have had a rating of 2400, or higher)
+            "lower skilled elite" => [
+                new StaticContestant(2200, 2400, 100),
+                new StaticContestant(2400, 2400, 100),
+                2198,
+            ],
             "equally skilled elite" => [
                 new StaticContestant(2200, 2400, 100),
                 new StaticContestant(2200, 2200, 75),
@@ -149,10 +179,10 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(2200, 2200, 75),
                 2392,
             ],
-            "lower skilled elite" => [
-                new StaticContestant(2200, 2400, 100),
-                new StaticContestant(2400, 2400, 100),
-                2198,
+            "much higher skilled elite" => [
+                new StaticContestant(2300, 2550, 100),
+                new StaticContestant(1400, 1400, 75),
+                2291,
             ],
 
         ];
@@ -177,6 +207,11 @@ final class RatingSystemTest extends TestCase
     {
         return [
 
+            "lower skilled contestant" => [
+                new StaticContestant(1000, 1000, 35),
+                new StaticContestant(2000, 2000, 75),
+                1018,
+            ],
             "equally skilled contestant" => [
                 new StaticContestant(1000, 1000, 35),
                 new StaticContestant(1000, 1000, 35),
@@ -187,13 +222,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 35),
                 2002,
             ],
-            "lower skilled contestant" => [
-                new StaticContestant(1000, 1000, 35),
-                new StaticContestant(2000, 2000, 75),
-                1018,
+            "much higher skilled contestant" => [
+                new StaticContestant(2300, 2300, 75),
+                new StaticContestant(1400, 1400, 35),
+                2302,
             ],
 
             // Rookie contestants (less than 30 matches played)
+            "lower skilled rookie" => [
+                new StaticContestant(1000, 1000, 10),
+                new StaticContestant(2000, 2000, 75),
+                1037,
+            ],
             "equally skilled rookie" => [
                 new StaticContestant(1000, 1000, 10),
                 new StaticContestant(1000, 1000, 10),
@@ -204,13 +244,18 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(1000, 1000, 10),
                 1114,
             ],
-            "lower skilled rookie" => [
-                new StaticContestant(1000, 1000, 10),
-                new StaticContestant(2000, 2000, 75),
-                1037,
+            "much higher skilled rookie" => [
+                new StaticContestant(2300, 2300, 20),
+                new StaticContestant(1400, 1400, 10),
+                2303,
             ],
 
             // Highly skilled contestants (have had a rating of 2400, or higher)
+            "lower skilled elite" => [
+                new StaticContestant(2200, 2400, 100),
+                new StaticContestant(2400, 2400, 100),
+                2208,
+            ],
             "equally skilled elite" => [
                 new StaticContestant(2200, 2400, 100),
                 new StaticContestant(2200, 2200, 75),
@@ -221,10 +266,10 @@ final class RatingSystemTest extends TestCase
                 new StaticContestant(2200, 2200, 75),
                 2402,
             ],
-            "lower skilled elite" => [
-                new StaticContestant(2200, 2400, 100),
-                new StaticContestant(2400, 2400, 100),
-                2208,
+            "much higher skilled elite" => [
+                new StaticContestant(2300, 2550, 100),
+                new StaticContestant(1400, 1400, 75),
+                2301,
             ],
 
         ];
