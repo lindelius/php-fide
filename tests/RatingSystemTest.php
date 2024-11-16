@@ -29,7 +29,7 @@ final class RatingSystemTest extends TestCase
         );
     }
 
-    public function provideRatingAfterDraw(): array
+    public static function provideRatingAfterDraw(): array
     {
         return [
 
@@ -116,7 +116,7 @@ final class RatingSystemTest extends TestCase
         );
     }
 
-    public function provideRatingAfterLoss(): array
+    public static function provideRatingAfterLoss(): array
     {
         return [
 
@@ -203,7 +203,7 @@ final class RatingSystemTest extends TestCase
         );
     }
 
-    public function provideRatingAfterWin(): array
+    public static function provideRatingAfterWin(): array
     {
         return [
 
