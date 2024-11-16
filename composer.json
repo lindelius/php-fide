@@ -1,7 +1,7 @@
 {
     "name": "lindelius/php-fide",
     "description": "A zero-dependency PHP implementation of the FIDE Rating System.",
-    "keywords": ["elo", "rating", "fide"],
+    "keywords": ["chess", "elo", "fide", "rating"],
     "homepage": "https://github.com/lindelius/php-fide",
     "license": "Apache-2.0",
     "authors": [
