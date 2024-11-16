@@ -1,7 +1,7 @@
 {
     "name": "lindelius/php-fide",
     "description": "A zero-dependency PHP implementation of the FIDE Rating System.",
-    "keywords": ["elo", "rating", "fide"],
+    "keywords": ["chess", "elo", "fide", "rating"],
     "homepage": "https://github.com/lindelius/php-fide",
     "license": "Apache-2.0",
     "authors": [
@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "phpbench/phpbench": "^1.3",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^10.5"
     },
     "autoload": {
         "psr-4": {
@@ -27,5 +27,8 @@
             "Lindelius\\FIDE\\Benchmarks\\": "benchmarks/",
             "Lindelius\\FIDE\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testsuite Unit"
     }
 }
